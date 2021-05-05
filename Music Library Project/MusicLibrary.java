@@ -15,6 +15,8 @@ public class MusicLibrary
             System.out.println("(3) - remove album");
             System.out.println("(4) - get album through title");
             System.out.println("(5) - get album through artist");
+            System.out.println("(6) - sort albums by title alphabetically");
+            System.out.println("(7) - sort albums by artist alphabetically");
 
             String input = scanner.nextLine();
     
@@ -52,7 +54,23 @@ public class MusicLibrary
                 System.out.println("press enter to return to main music Library");
                 scanner.nextLine();
             }
-            else
+            else if(input.equals("6"))
+            {
+                sortAlbumsByAlphabetically();
+                System.out.println("Songs sorted by title alphabetically");
+
+                System.out.println("press enter to return to main music Library");
+                scanner.nextLine();
+            }
+            else if(input.equals("7"))
+            {
+                sortAlbumsByArtist();
+                System.out.println("Songs sorted by artist alphabetically");
+
+                System.out.println("press enter to return to main music Library");
+                scanner.nextLine();
+            }
+            else if(input.equals(""))
             {
                 System.exit(0);
             }
@@ -174,9 +192,12 @@ public class MusicLibrary
 
     public static void initialAlbums()
     {
-        albums = new Album[2];
+        albums = new Album[5];
         albums[0] = new Album(new Track[]{new Track("Sunflower",2), new Track("Circles",3), new Track("Congradulations",1)},"Post Malone","Into the Spiderverse");
         albums[1] = new Album(new Track[]{new Track("Homework",3), new Track("Paint",4), new Track("Liverpool",3)},"Nevin Gilday","Some stuff I wrote");
+        albums[2] = new Album(new Track[]{new Track("Innocent",6), new Track("Happy",4), new Track("Lives",3)},"Bob Hansen","Some stuff I wrote");
+        albums[3] = new Album(new Track[]{new Track("Daily Breif",3), new Track("Rant",4), new Track("Fraud speech",3)},"Ronald Thump","Long speeches");
+        albums[4] = new Album(new Track[]{new Track("New release",3), new Track("Rest assured",4), new Track("Georgia address",3)},"Poesph Fiden","Delivered addresses");
     }
 
     public static void getAlbumByArtist()
@@ -232,6 +253,30 @@ public class MusicLibrary
         }
         return -1;
     }
+    public static void sortAlbumsByArtist()
+    {
+        //goes through full array and swaps alphabetially first with first one
+        //go through rest of array and swamp alphabetically first with the second one
+        for(int i = 1; i < albums.length; i++)
+        {
+            for(int j = i; j > 0; j--)
+            {
+                if(albums[j] != null && albums[j-1] != null && alphabeticallyFirst(albums[j].author,albums[j-1].author) == 0) //if this is less than the one before it
+                {
+                 //swap them
+                 Album placeholder;
+                 placeholder = albums[j];
+                 albums[j] = albums[j-1];
+                 albums[j-1] = placeholder;
+                }
+                else if(albums[j] != null && albums[j-1] != null)
+                {
+                    break;
+                }
+            }
+            
+        }
+    }
 
     public static void sortAlbumsByAlphabetically()
     {
@@ -240,11 +285,11 @@ public class MusicLibrary
         int lowestIndex = 0;
         for(int i = 0; i < albums.length -1; i++)
         {
-            for(int j = i; j < albums.length; a++)
+            for(int j = i; j < albums.length; j++)
             {
-                if(albums[i] != null && alphabeticallyFirst(albums[lowesetIndex],albums[i]) == 1)
+                if(albums[j] != null && alphabeticallyFirst(albums[lowestIndex].title,albums[j].title) == 1)
                 {
-                 lowestIndex = i;   
+                 lowestIndex = j;   
                 }
             }
             //swap them
@@ -281,16 +326,12 @@ public class MusicLibrary
         char[] letters = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
         for(int i = 0; i < letters.length; i++)
         {
-            if(letters[i] == letter)
+            if(letters[i] == Character.toLowerCase(letter))
             {
                 return i;
             }
         }
         return -1;
-    }
-    public static void sortAlbumsByTime()
-    {
-
     }
 
 }
