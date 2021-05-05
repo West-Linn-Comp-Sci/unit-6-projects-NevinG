@@ -237,13 +237,21 @@ public class MusicLibrary
     {
         //goes through full array and swaps alphabetially first with first one
         //go through rest of array and swamp alphabetically first with the second one
-
-        for(int i = 0; i < albums.length; i++)
+        int lowestIndex = 0;
+        for(int i = 0; i < albums.length -1; i++)
         {
-            for(int a = i; a < albums.length; a++)
+            for(int j = i; j < albums.length; a++)
             {
-                
+                if(albums[i] != null && alphabeticallyFirst(albums[lowesetIndex],albums[i]) == 1)
+                {
+                 lowestIndex = i;   
+                }
             }
+            //swap them
+            Album placeholder;
+            placeholder = albums[i];
+            albums[i] = albums[lowestIndex];
+            albums[lowestIndex] = placeholder;
         }
     }
     public static int alphabeticallyFirst(String a, String b)
