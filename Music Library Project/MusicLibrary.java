@@ -15,8 +15,11 @@ public class MusicLibrary
             System.out.println("(3) - remove album");
             System.out.println("(4) - get album through title");
             System.out.println("(5) - get album through artist");
-            System.out.println("(6) - sort albums by title alphabetically");
-            System.out.println("(7) - sort albums by artist alphabetically");
+            System.out.println("(6) - sort albums by title alphabetically(selection search)");
+            System.out.println("(7) - sort albums by artist alphabetically(insertion sort)");
+            System.out.println("(8) - get album through title(binary search)");
+            System.out.println("(9) - get album through artist(binary search)");
+
 
             String input = scanner.nextLine();
     
@@ -66,6 +69,20 @@ public class MusicLibrary
             {
                 sortAlbumsByArtist();
                 System.out.println("Songs sorted by artist alphabetically");
+
+                System.out.println("press enter to return to main music Library");
+                scanner.nextLine();
+            }
+            else if(input.equals("8"))
+            {
+                getAlbumByTitleBinary();
+
+                System.out.println("press enter to return to main music Library");
+                scanner.nextLine();
+            }
+            else if(input.equals("9"))
+            {
+                getAlbumByArtistBinary();
 
                 System.out.println("press enter to return to main music Library");
                 scanner.nextLine();
@@ -253,6 +270,79 @@ public class MusicLibrary
         }
         return -1;
     }
+
+    public static int getAlbumIndexByTitleBinary(String title)
+    {
+        int min = 0;
+        int max = albums.length;
+        int middle = (min +max)/2;
+        while(!albums[middle].title.equals(title))
+        {
+            if(alphabeticallyFirst(albums[middle].title, title) == 0)
+            {
+                min = middle;
+                middle = (min +max)/2;
+            }
+            else
+            {
+                max = middle;
+                middle = (min +max)/2;
+            }
+        }
+        return middle;
+    }
+
+    public static int getAlbumIndexByArtistBinary(String artistName)
+    {
+        int min = 0;
+        int max = albums.length;
+        int middle = (min +max)/2;
+        while(!albums[middle].author.equals(artistName))
+        {
+            if(alphabeticallyFirst(albums[middle].author, artistName) == 0)
+            {
+                min = middle;
+                middle = (min +max)/2;
+            }
+            else
+            {
+                max = middle;
+                middle = (min +max)/2;
+            }
+        }
+        return middle;
+    }
+
+    public static void getAlbumByTitleBinary()
+    {
+        System.out.println("Type album name to get");
+        String albumName = scanner.nextLine();
+        int index = getAlbumIndexByTitleBinary(albumName);
+        if(index != -1)
+        {
+            System.out.println(albums[index]);
+        }
+        else
+        {
+            System.out.println("couldn't find album\n");
+        }
+    }
+
+    public static void getAlbumByArtistBinary()
+    {
+        System.out.println("Type artist to get album");
+        String artistName = scanner.nextLine();
+        int index = getAlbumIndexByArtistBinary(artistName);
+        if(index != -1)
+        {
+            System.out.println(albums[index]);
+        }
+        else
+        {
+            System.out.println("couldn't find album\n");
+        }
+    }
+
     public static void sortAlbumsByArtist()
     {
         //goes through full array and swaps alphabetially first with first one
