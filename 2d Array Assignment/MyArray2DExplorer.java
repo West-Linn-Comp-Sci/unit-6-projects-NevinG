@@ -16,14 +16,44 @@ public class MyArray2DExplorer
 
         System.out.println();
 
+        System.out.print("Test minRow: ");
+        exp.printArray(exp.minRow(array));
 
-        System.out.print("Test minRow: \n Expecting: {0 2 3 4} \n Actual: {");
-        int [] row = exp.minRow(array);
-        for(int i = 0; i < row.length; i++){
-            System.out.print(row[i] + " ");
+
+        System.out.print("Test colMaxs: ");
+        exp.printArray(exp.colMaxs(array));
+
+        System.out.print("Test allRowSums: ");
+        exp.printArray(exp.allRowSums(array));
+
+        System.out.print("Test averageCol: ");
+        exp.printArray(exp.averageCol(array));
+
+        System.out.print("Test smallEven: ");
+        System.out.println(exp.smallEven(array));
+
+        System.out.print("Test biggestRow: ");
+        System.out.println(exp.biggestRow(array));
+
+
+    }
+
+    public void printArray(int[] array)
+    {
+        for(int i = 0; i < array.length; i++)
+        {
+            System.out.print(array[i] + ", ");
         }
-        System.out.print("}");
+        System.out.println("");
+    }
 
+    public void printArray(double[] array)
+    {
+        for(int i = 0; i < array.length; i++)
+        {
+            System.out.print(array[i] + ", ");
+        }
+        System.out.println("");
     }
 
     public boolean evenRow(int[][] mat, int row)
@@ -68,5 +98,87 @@ public class MyArray2DExplorer
             }
         }
         return nums[index];
+    }
+
+    public int[] colMaxs(int[][] matrix)
+    {
+        int[] toReturn = new int[matrix[0].length];
+        
+        for(int i = 0; i < matrix[0].length; i++) //starts by going through each first value of column
+        {
+            int max = matrix[0][i];
+            for(int j = 0; j < matrix.length; j++)
+            {
+                if(matrix[j][i] > max)
+                {
+                    max = matrix[j][i];
+                }
+            }
+
+            if( i < toReturn.length)
+            {
+                toReturn[i] = max;
+            }
+        }
+        return toReturn;
+    }
+
+    public int[] allRowSums(int[][] data)
+    {
+        int[] toReturn = new int[data.length];
+        for(int i = 0; i < data.length; i++)
+        {
+            for(int j = 0; j < data[i].length; j++)
+            {
+                toReturn[i] += data[i][j];
+            }
+        }
+        return toReturn;
+    }
+
+    public double[] averageCol(int[][] nums)
+    {
+        double[] toReturn = new double[nums.length];
+        for(int i = 0; i < nums.length; i++)
+        {
+            for(int j = 0; j < nums[i].length; j++)
+            {
+                toReturn[i] += nums[i][j];
+            }
+            toReturn[i]/=nums[i].length;
+        }
+        return toReturn;
+    }
+
+    public int smallEven(int[][] matrix)
+    {
+        int smallEven = matrix[0][0];
+        for(int[] row : matrix)
+        {
+            for(int i : row)
+            {
+                if(i < smallEven && i %2 == 0)
+                {
+                    smallEven = i;
+                }
+            }
+        }
+        return smallEven;
+    }
+
+    public int biggestRow(int[][] nums)
+    {
+        int[] rowSums = allRowSums(nums);
+
+        int greatestSumIndex = 0;
+        for(int i = 1; i < rowSums.length; i++)
+        {
+            if(rowSums[i] > rowSums[greatestSumIndex])
+            {
+                greatestSumIndex = i;
+            }
+        }
+
+        return greatestSumIndex;
     }
 }
