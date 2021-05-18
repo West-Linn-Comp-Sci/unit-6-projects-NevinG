@@ -1,34 +1,38 @@
 public class BattleShip1D
 {
-   boolean[] battleShipGrid; 
+   public BattleShip[][] battleShipGrid; 
    int guesses = 0;
-   int gridSize;
+   int gridWidth;
+   int gridHeight;
    
-   
+   public BattleShip currentBattleShip;
    //Constructor
-   public BattleShip1D(int gridSize)
+   public BattleShip1D(int gridWidth, int gridHeight)
    {
-       battleShipGrid= new boolean[gridSize];
+       battleShipGrid= new BattleShip[gridWidth][gridHeight];
    }
    
    public boolean checkForBattleShips() //checks if there are alive battleships remaining, returns true or false
    {
-       for(int i = 0; i < battleShipGrid.length; i++)
+       for(int x = 0; x < battleShipGrid.length; x++)
        {
-           if(battleShipGrid[i])
-           {
-               return true;
-           }
+            for(int y = 0; y < battleShipGrid[x].length; y++)
+            {
+                if(battleShipGrid[x][y] != null && battleShipGrid[x][y].stillFloating)
+                {
+                    return true;
+                }
+            }
        }
        return false;
    }
    
-   public boolean shootBattleShip(int index)
+   public boolean shootBattleShip(int xIndex, int yIndex)
    {
        guesses++;
-       if(battleShipGrid[index])
+       if(battleShipGrid[xIndex][yIndex] != null)
        {
-           battleShipGrid[index] = false;
+           battleShipGrid[xIndex][yIndex].shoot();
            System.out.println("Hit!");
            //eventually change to say sink if it sinks the full ship
            return true;
@@ -42,14 +46,33 @@ public class BattleShip1D
         
    
    //placeBattleShip(int[] indexs)
-   public void placeBattleShip(int leftIndex, int size)
+   public void placeBattleShip(int x, int y)
    {
-      // int something= Math.Random()*6
+       // int something= Math.Random()*6
        //int 
-       for(int i=0 ;i<size; i++)
+       if(battleShipGrid[x][y] == null)
        {
-           battleShipGrid[leftIndex+i] = true;
+        battleShipGrid[x][y] = currentBattleShip;
        }
+       else if(!battleShipGrid[x][y].placed)
+       {
+        battleShipGrid[x][y] = null;
+       }
+       
+   }
+
+   public void confirmBattleShipPlace()
+   {
+        for(int x = 0; x < battleShipGrid.length; x++)
+        {
+            for(int y = 0; y < battleShipGrid[x].length; y++)
+            {
+                if(battleShipGrid[x][y] != null)
+                {
+                    battleShipGrid[x][y].placed = true;
+                }
+            }
+        }
    }
    
    public String overallRating()

@@ -3,54 +3,93 @@ import java.util.Random;
 import java.util.ArrayList;
 public class BattleShip1DRunner 
 {
+    public enum Stage 
+    {
+        PLACING,GUESSING
+    }
+
     static Scanner scanner = new Scanner(System.in);
     static Random random = new Random();
-    static BattleShip1D myBattleShipMap;
-    static BattleShip1D computerBattleShipMap;
-    
+    public static BattleShip1D myBattleShipMap;
+    public static BattleShip1D computerBattleShipMap;
+
+    public static Stage stage;
+    public static GUI myGui;
+    public static GUI computerGui;
     //array of all valid areas the computer can guess, assigned after grid size is determined
     static ArrayList<Integer> computerGuesses = new ArrayList<>();
     
     public static void main(String[] args) 
     {
         //create our battleship
-        System.out.println("Enter in the size of the lake you want your battleship to be in");
-        int arraySize = scanner.nextInt();
+        int xSize = 10;
+        int ySize = 10;
+
+        int numOfShips = 1;
+        int shipSize = 3;
+        myBattleShipMap = new BattleShip1D(xSize, ySize);
         
-        System.out.println("Enter the number of battleships you want");
-        int numOfShips = scanner.nextInt();
-        
-        System.out.println("Enter in the size of your battleship");
-        int shipSize = scanner.nextInt();
-        myBattleShipMap = new BattleShip1D(arraySize);
-        
+        //create GUI
+        myGui = new GUI(500,500,xSize, ySize, true, "Player board", myBattleShipMap);
+        computerGui = new GUI(500,500,xSize, ySize, false, "Computer board", computerBattleShipMap);
+
+        /*
         //creates computerBattleShip map
-        computerBattleShipMap = new BattleShip1D(arraySize);
+        computerBattleShipMap = new BattleShip1D(xSize, ySize);
         
         //places computers ships randomly
-        computerBattleShipMap.placeBattleShip(random.nextInt(arraySize-shipSize),shipSize);
+        computerBattleShipMap.placeBattleShip(random.nextInt(xSize-shipSize),random.nextInt(ySize),shipSize, true);
+        */
 
         //lets user position their ships on the map
-        for(int i = 0; i < numOfShips; i++)
-        {
-            System.out.println(
-            "\nThis is ship " + i + "." +
-            "\nWhere would you like to place the left most part of the battleship on the sea?"+
-            "\nYour Ship will be placed horizontally."+
-            "\nYou can place this ship on positions 0-" + (arraySize-shipSize) + ".");
-            int shipPosition = scanner.nextInt();
-            myBattleShipMap.placeBattleShip(shipPosition, shipSize);
-            System.out.println("Ship successfully placed");
-        }
-        
+        stage = Stage.PLACING;
+
+        myBattleShipMap.currentBattleShip = new BattleShip(5);
+        System.out.println("Place Ship 1. It is 5 tiles long. Place it on player board");
+        System.out.println("Click on the 5 tiles where you want to place your ship");
+        System.out.println("Press enter to move on to next ship once done");
+        scanner.nextLine();
+        myBattleShipMap.confirmBattleShipPlace();
+
+        myBattleShipMap.currentBattleShip = new BattleShip(4);
+        System.out.println("Place Ship 1. It is 4 tiles long. Place it on player board");
+        System.out.println("Click on the 4 tiles where you want to place your ship");
+        System.out.println("Press enter to move on to next ship once done");
+        scanner.nextLine();
+        myBattleShipMap.confirmBattleShipPlace();
+
+        myBattleShipMap.currentBattleShip = new BattleShip(3);
+        System.out.println("Place Ship 1. It is 3 tiles long. Place it on player board");
+        System.out.println("Click on the 3 tiles where you want to place your ship");
+        System.out.println("Press enter to move on to next ship once done");
+        scanner.nextLine();
+        myBattleShipMap.confirmBattleShipPlace();
+
+        myBattleShipMap.currentBattleShip = new BattleShip(3);
+        System.out.println("Place Ship 1. It is 3 tiles long. Place it on player board");
+        System.out.println("Click on the 3 tiles where you want to place your ship");
+        System.out.println("Press enter to move on to next ship once done");
+        scanner.nextLine();
+        myBattleShipMap.confirmBattleShipPlace();
+
+        myBattleShipMap.currentBattleShip = new BattleShip(2);
+        System.out.println("Place Ship 1. It is 2 tiles long. Place it on player board");
+        System.out.println("Click on the 2 tiles where you want to place your ship");
+        System.out.println("Press enter to move on to next ship once done");
+        scanner.nextLine();
+        myBattleShipMap.confirmBattleShipPlace();
+
+        stage = Stage.PLACING;
+        /*
         //prepares computerGuesses array
         for(int i = 0; i < arraySize; i++)
         {
             computerGuesses.add(i);
         }
+        */
         
         //startgame
-        
+        /*
         //as long as there are still no one has no battleship
         while(myBattleShipMap.checkForBattleShips() && computerBattleShipMap.checkForBattleShips())
         {
@@ -60,8 +99,6 @@ public class BattleShip1DRunner
             //as long as there are still no one has no battleship & still haven't missed
             while(hit && myBattleShipMap.checkForBattleShips() && computerBattleShipMap.checkForBattleShips())
             {
-                System.out.println("\nIt's time for you to fire a missle. Type the cordinates of the location you want to shoot");
-                int shootPosition = scanner.nextInt();
                 hit = computerBattleShipMap.shootBattleShip(shootPosition);
             }
             
@@ -100,5 +137,6 @@ public class BattleShip1DRunner
         }
         
         //need to add replayabiity to code restarts once someone wins.
+        */
     }
 }
